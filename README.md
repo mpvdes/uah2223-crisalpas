@@ -25,3 +25,8 @@
 ## Insertar imágenes con texto encima
 
 ![Logo de Open Refine](https://d33wubrfki0l68.cloudfront.net/3c988a78f4ddfdf4302932d866feda499368476d/d1ae7/img/openrefine_logo.svg "Aquí va el logo de Open Refine") Donec tristique maximus mauris sed convallis. Curabitur vitae libero lacus.
+
+## Texto citado
+
+> Los principios FAIR son fundamentales para la investigación abierta (*Fattorello, 2008*).
+
