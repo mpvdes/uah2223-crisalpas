@@ -30,3 +30,7 @@
 
 > Los principios FAIR son fundamentales para la investigación abierta (*Fattorello, 2008*).
 
+
+## Texto citado en línea (requiere de acento inverso, al lado de la p)
+
+`Los principios FAIR son fundamentales para la investigación abierta´ (*Fattorello, 2008*), y por ello la investigación de la institución tiene que responder a estos principios.
