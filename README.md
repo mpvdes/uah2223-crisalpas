@@ -1,6 +1,6 @@
 # Apuntes del MPVD UAH 2223
 
-Este es el repositorio de trabajo inicial de la alumna Cristina Alonso Pascual del [Máster de Formación Permanente en Periodismo y Visualización de Datos de la Universidad de Alcalá](https://mpvd.es/)
+Este es el repositorio de trabajo inicial de *Cristina Alonso Pascual*, alumna del [Máster de Formación Permanente en Periodismo y Visualización de Datos de la Universidad de Alcalá](https://mpvd.es/)
 
 ## Documentos
 
