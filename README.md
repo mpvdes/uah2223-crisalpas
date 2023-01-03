@@ -18,6 +18,14 @@
 
 [Curabitur ante magna](https://openrefine.org/), vehicula et justo ut, dignissim congue velit. Nunc suscipit elit a risus consectetur, viverra suscipit nisl eleifend.
 
+<http://blog.infotics.es>
+Escribe a:
+<hola@infotics.es>
+
+[URL de enlace uno][1] debajo de este párrafo, aparecerá debajo el enlace uno, y a continuación [el enlace dos][2].
+[1]: http://url
+[2]: http://otra.url "Con atributo title aquí dentro"
+
 ## Insertar imágenes
 
 ![Logo de Open Refine](https://d33wubrfki0l68.cloudfront.net/3c988a78f4ddfdf4302932d866feda499368476d/d1ae7/img/openrefine_logo.svg) Cras ullamcorper porttitor lectus, nec feugiat nisi venenatis id. Integer sit amet dolor at enim auctor posuere vehicula ac diam.
@@ -30,6 +38,9 @@
 
 > Los principios FAIR son fundamentales para la investigación abierta (*Fattorello, 2008*).
 
+> Esto es una cita
+> Dime de qué careces
+> Y te diré de qué presumes
 
 ## Texto citado en línea (requiere de acento inverso, al lado de la p)
 
