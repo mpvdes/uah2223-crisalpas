@@ -30,4 +30,7 @@ Es decir, con este orden: https://nombredelaorganizacion.github.io/nombredelrepo
 
 Aunque lo vamos a hacer de otra manera, podemos crear nuevos archivos directamente desde el repositorio concreto de Github.
 
-Creamos uno en el que copiamos el contenido del README.md.
+Creamos uno en el que copiamos el contenido del README.md. Pasado un tiempo, como antes hemos creado la página del mismo, nos transformará la página raíz en index.html. Los documentos se transforman a su vez en páginas web dentro del índice. 
+
+Al respecto, un dato curioso: no se da la dirección de esos documentos completa, sino que se da un enlace relativo, como en el mundo web, es decir, una ruta relativa al lugar donde estás. Dicho enlace sería directamente pruebas-github.md, porque está en la misma ‘altura’ que el documento main que se usa como index y que en este caso es el README.md, que funciona a modo de raíz.
+
