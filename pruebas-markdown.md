@@ -4,6 +4,21 @@
 
 *Lorem ipsum* **dolor sit amet**, ***consectetur adipiscing elit***. Aliquam blandit leo vitae libero scelerisque faucibus. Cras tristique purus sit amet elit consectetur posuere nec in tortor.
 
+## Comentarios
+
+Este comentario no se va a ver
+    
+<!--
+     __        __                      _     _      _
+     \ \      / /__    __ _ _ __ ___  | |__ (_)_ __(_)_ __   __ _
+      \ \ /\ / / _ \  / _` | '__/ _ \ | '_ \| | '__| | '_ \ / _` |
+       \ V  V /  __/ | (_| | | |  __/ | | | | | |  | | | | | (_| |
+        \_/\_/ \___|  \__,_|_|  \___| |_| |_|_|_|  |_|_| |_|\__, |
+                                                            |___/
+    Ever thought about joining us?
+    https://workforus.theguardian.com/careers/product-engineering/
+     --->
+
 ## Listados anidados
 
  Donec ut nulla ac enim fermentum mattis vel id diam:
