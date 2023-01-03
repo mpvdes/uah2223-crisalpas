@@ -5,6 +5,6 @@ Este es el repositorio de trabajo inicial de la alumna Cristina Alonso Pascual d
 ## Documentos
 
 - [Pruebas con Markdown](pruebas-markdown.md)
-- [Preubas con Github](pruebas-github.md)
+- [Pruebas con Github](pruebas-github.md)
 
 ![Logo de MPVD en UAH](https://mpvd.es/images/logo.svg "MPVD en UAH")
