@@ -34,3 +34,8 @@ Creamos uno en el que copiamos el contenido del README.md. Pasado un tiempo, com
 
 Al respecto, un dato curioso: no se da la dirección de esos documentos completa, sino que se da un enlace relativo, como en el mundo web, es decir, una ruta relativa al lugar donde estás. Dicho enlace sería directamente pruebas-github.md, porque está en la misma ‘altura’ que el documento main que se usa como index y que en este caso es el README.md, que funciona a modo de raíz.
 
+Algunas notas a tener en cuenta: 
+
+- es importante siempre en los documentos añadir el protocolo https://
+- es bueno dejar espacios en blanco entre elementos en bloque
+- si se quiere añadir un comentario y que no te lo lea el intérprete de comandos, como markdown (md) no tiene un carácter reservado, el que funciona es el de HTML, que es <!-- para abrir y ---> para cerrar
