@@ -6,7 +6,7 @@ Este es el repositorio de trabajo inicial de *Cristina Alonso Pascual*, alumna d
 
 - Carpeta de apuntes del MPVD:
 
-  - [Apuntes sobre Markdown](pruebas-markdown.md)
+  - [Apuntes sobre Markdown](apuntes-mpvd/pruebas-markdown.md)
   - [Apuntes sobre Github](pruebas-github.md)
   - [Apuntes sobre la terminal](pruebas-terminal.md)
   - Carpeta para Emacs
