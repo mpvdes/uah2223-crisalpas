@@ -1,0 +1,15 @@
+/*Aquí van los estilos css de la página web*/
+.row{
+    /* color: white;*/
+    background-color: blue;
+    border: 2px solid orange;
+    padding: 10px;
+    margin: 5px;
+}
+
+.columna{
+    background-color: yellow;
+    border: 2px dotted brown;
+    padding: 5px;
+    /* margin: 5px; */
+}
