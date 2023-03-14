@@ -74,8 +74,6 @@ Hay que incluir la licencia Creative Commons también en los metadatos.
 
 ## 15/02/2023 Representación del color y formatos gráficos
 
-(Entro a clase a las 19:15 por prueba médica)
-
 ### Representación del color
 
 El color es difícil de representar, porque existen diversas formas de interpretarlo. De hecho, nuestro cerebro es el primer filtro, ya que lo lee a través de cierta subjetividad.
@@ -176,4 +174,20 @@ Seguimos practicando. Si queremos agrupar unos objetos para tratarlos como una �
 
 ## 23/02/2023 Inkscape
 
-Añadir la clase, tarde de trabajo.
+
+##28/02/2023 Audacity
+
+Para reducir el ruido, seleccionar un trocito del audio que solo incluya ruido y hacer clic en Analizar>Reducción de ruido>Obtener perfil de ruido. Luego, seleccionas el audio por completo y haces clic en Analizar>Reducción de ruido>Aceptar.
+
+Si todavía sigue quedando ruido, se puede incluso repetir el proceso, aunque en ocasiones podría haber alteraciones en el sonido según sus características. Por ello, el objetivo principal es partir de la mejor calidad posible.
+
+
+##01/03/2023 Openshot
+
+Como en anteriores ocasiones, es muy importante diferenciar entre Guardar proyecto y Exportar. De la misma forma que teníamos en Audacity, en Openshot tenemos distintas pistas en las que superponer varios fragmentos de vídeo.
+
+A un proyecto de vídeo se puede añadir:
+
+- Vídeo
+- Sonido
+

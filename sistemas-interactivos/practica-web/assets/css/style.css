@@ -1,4 +1,29 @@
 /*Aquí van los estilos css de la página web*/
+.portada{
+    background-color: #65C2F180;
+    min-height: 380px;
+}
+
+.imagen-portada{
+    width: 160px;
+    height: 160px;
+    margin: 5px;
+    border-radius: 50%;
+}
+
+.sobre-mi{
+    min-height: 230px;
+    color: black;
+    background-color: #f8f9fa;
+    margin:20px;
+}
+
+.enlace-mail{
+    text-decoration: none;
+}
+
+/* A partir de aquí los estilos corresponden a las prácticas */
+
 .row{
     /* color: white;*/
     background-color: blue;
@@ -12,4 +37,20 @@
     border: 2px dotted brown;
     padding: 5px;
     /* margin: 5px; */
+}
+
+.contenedor{
+    background-color: grey;
+    height: 400px;
+}
+
+.caja{
+    color: white;
+    background-color: green;
+    text-align: center;
+    line-height: 100px;
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    margin: 10px;
 }
