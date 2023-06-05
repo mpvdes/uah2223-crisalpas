@@ -1,0 +1,101 @@
+---
+title: "analisis-redes"
+author: "Cristina Alonso Pascual"
+date: "2023-05-16"
+output: html_notebook
+---
+
+```{r}
+
+#install.packages("igraph")
+
+library(igraph)
+
+#install.packages("tools")
+
+library(tools)
+
+pkgs <- available.packages() # creamos una variable que se llama pkgs con los paquetes que tenemos instalados
+
+str(pkgs) # vamos a ver la cadena de texto de los paquetes
+
+head(package_dependencies(pkgs),3)  # vamos a ver los tres primeros
+
+#help("package_dependencies")
+
+```
+```{r}
+
+#install.packages("plyr")
+
+library(plyr)
+
+install.packages("depLevel")
+
+pkgs <- available.packages()
+
+
+# este código no funciona, pero Alejandro sigue
+
+edges <- ldply(c('Depends','Imports','Suggests'), function(depLevel) {
+  deps <- package_dependencies(pkgs, depLevel = depLevel)
+  ldply(names(deps), function(pkg)
+    if(!identical(deps[[pkg]],NA))
+      data.frame(
+        src = pkg,
+        dep = deps[[pkg]][,1],
+        label = depLevel,
+        stringsAsFactors = FALSE))
+  } )
+
+```
+
+```{r}
+
+nrow(edges)/(nrow(pkgs)*(nrow(pkgs)-1))
+
+```
+
+```{r}
+
+head(sort(table(edges$dep), decreasing = TRUE)
+
+```
+
+```{r}
+
+library(igraph)
+
+g <- graph.data.frame(edges)
+
+summary(g)
+
+```
+
+```{r}
+
+graph.density(g)
+
+```
+
+```{r}
+
+head(sort(degree(g), decreasing = TRUE))
+
+```
+
+```{r}
+
+# nos permite ver qué paquetes dependen de otros en determinada medida
+
+head(sort(betweenness(g), decreasing = TRUE))
+
+```
+
+```{r}
+
+# nos permite ver qué paquetes dependen de otros en determinada medida
+
+head(sort(betweenness(g), decreasing = TRUE))
+
+```

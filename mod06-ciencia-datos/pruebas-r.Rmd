@@ -1,0 +1,652 @@
+---
+title: "pruebas-r"
+author: "Cristina Alonso Pascual"
+date: "2023-04-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Creamos una función que nos diga si el número que tenemos es par o no:
+
+```{r}
+es.par <- function(un.numero){
+  resto <- un.numero %% 2
+  if(resto==0)
+    return(TRUE)
+  return(FALSE)
+}
+```
+
+Introducimos datos en la función:
+
+```{r}
+es.par(2)
+```
+
+Ahora con dos argumentos:
+
+```{r}
+es.divisible.entre <- function(numero.grande, numero.pequeno){
+  if(numero.grande %% numero.pequeno != 0)
+    return(FALSE)
+  return(TRUE)
+}
+```
+
+Probamos la nueva función:
+
+```{r}
+es.divisible.entre(9,3)
+```
+
+Ahora metemos una función dentro de otra, reescribiendo la función es.par:
+
+```{r}
+es.par <- function(un.numero){
+  es.divisible.entre(un.numero,2)
+}
+```
+
+Probamos la nueva función:
+
+```{r}
+
+es.par(568)
+
+```
+
+Vamos a aplicar una función elemento a elemento de un vector:
+
+```{r}
+un.vector <- c(23,45,76,33,56,12)
+
+sapply(un.vector, es.par)
+
+```
+
+## Matrices
+
+Vamos a crear una matriz:
+
+```{r}
+una.matriz <- matrix(c(1,2,3,4,5,6))
+
+una.matriz
+
+```
+
+Ahora vamos a crear una matriz con diferentes columnas. Podemos hacerlo de diferentes maneras:
+
+```{r}
+
+matriz.dos <- matrix(c(1,2,3,4,5,6), ncol=2)
+matriz.dos
+
+```
+
+```{r}
+
+otra.matriz <- cbind(c(1,2,3),c(4,5,6))
+otra.matriz
+
+```
+
+Si quisiéramos alterar las columnas y transformarlas en filas, debemos **transponer**. Se puede hacer de dos maneras:
+
+```{r}
+
+matriz.tres <- rbind(c(1,2,3),c(4,5,6))
+matriz.tres
+
+```
+
+```{r}
+t(otra.matriz)
+```
+Hay otras funciones que podemos usar con las matrices, como:
+
+```{r}
+rowSums(otra.matriz)
+```
+
+```{r}
+colSums(otra.matriz)
+```
+
+```{r}
+rowMeans(otra.matriz)
+```
+
+```{r}
+colMeans(otra.matriz)
+```
+
+Vamos a instalar el paquete para visualizar:
+
+```{r}
+
+#install.packages("ggplot2")
+
+```
+
+Una vez instalado, ya no necesitamos hacerlo más, pero sí que necesitaremos cargarlo cada vez que trabajemos con él.
+
+```{r}
+
+library("ggplot2")
+
+```
+
+Ahora vamos a usar el archivo de sabores de helado para hacer una visualización básica:
+
+```{r}
+
+ggplot(favs,aes(x=sabores, y=numero))
+  geom_bar(stat="identity")
+  ggtitle("Preferencias de sabor de helado")
+
+```
+
+
+Tras desinstalar e instalar de nuevo R por problemas con la versión, instalamos de nuevo ggplot2:
+
+```{r}
+
+#install.packages("ggplot2")
+
+```
+
+Una vez instalado ya no necesitamos hacerlo más, pero sí que tenemos que aplicar la biblioteca a cada documento:
+
+```{r}
+
+library(ggplot2)
+
+```
+
+
+Instalo más paquetes necesarios:
+
+```{r}
+
+if(!require(XML)){install.packages("XML"); require(XML)}
+
+install.packages("XML")
+
+if(!require(XML)){install.packages("XML"); require(XML)}
+
+#llamo a la biblioteca necesaria, previamente instalada
+
+library("XML")
+
+#Cojo desde le listado de la web de CRAN los paquetes disponibles tabulados y los convierto en una matriz
+
+paquetesR <- readHTMLTable('http://cran.r-project.org/web/packages/available_packages_by_name.html')
+
+#instalo la biblioteca para hacer nubes de palabras
+
+if(!require(wordcloud)){install.packages("wordcloud"); require(wordcloud)}
+
+library("wordcloud")
+
+#seleccionamos solamente la segunda columna con las descripciones de los paquetes
+
+palabras <- paquetesR[[1]][,2]
+
+#cogemos únicamente las 1000 primeras palabras
+
+menos.palabras <- palabras[1:1000]
+
+#dibujamos la nube de palabras
+
+wordcloud(menos.palabras)
+
+```
+
+Una vez hecha esta prueba vamos a empezar a manejar datos con un paquete de ejemplo:
+
+```{r}
+
+datos.cualitativos <- c("cara","cruz","cruz","cara")
+
+datos.cuantitativos.continuos <- c(198.1,178.46,165.20)
+
+help(package="datasets")
+
+#le pedimos que nos dé las primeras líneas
+
+head(mtcars)
+
+unique(mtcars$carb)
+
+#aquí le pedimos la distribución de frecuencias y según el resultado la moda sería 2 y 4 (por lo que sería bimodal)
+
+table(mtcars$carb)
+
+
+```
+Podemos instalar el paquete modeest, que nos permite estimar modas para valores cualitativos:
+
+```{r}
+
+#install.packages("modeest")
+
+#llamamos a la biblioteca modeest
+
+library(modeest)
+
+#le pedimos que nos muestre las modas
+
+mfv(mtcars$carb)
+
+#vamos a visualizarlas, para lo que llamamos a la biblioteca ggplot2
+
+library(ggplot2)
+
+#ahora visualizamos la frecuencia con un diagrama de barras
+
+qplot(factor(carb), data=mtcars, geom="bar")
+```
+
+```{r}
+
+qplot(factor(carb),
+      main="Número de modelos de coche por número de carburadores",
+      data=mtcars,
+      geom="bar",
+      fill=factor(carb),
+      xlab="Número de carburadores",
+      ylab="Número de modelos")
+
+```
+
+```{r}
+
+#vamos a preguntarle por una base de datos de ejemplo para conocer sus características
+
+?airquality
+
+#visualizamos un poco los datos
+
+head(airquality)
+
+#Hacemos la distribución en nueve intervalos
+
+cut(airquality$Temp,9)
+
+#Ahora vamos a hacer la tabla de distribución de frecuencias
+
+table(cut(airquality$Temp,9))
+
+#hacemos un histograma
+
+hist(airquality$Temp, col="red", main="Histograma para la temperatura de mayo a septiembre en NY")
+
+
+```
+
+```{r}
+
+#visualizamos de otra forma
+
+qplot(Temp, data=airquality, geom="histogram",
+      main="Histograma para la temperatura de mayo a septiembre en NY",
+      binwidth=3,
+      color=I("yellow"),
+      fill="red",
+      xlab="Temperatura",
+      ylab="")
+
+```
+
+Seguimos con más contenido:
+
+```{r}
+
+nums <- c(1,2,3,4,5)
+
+sum(nums)/length(nums)
+
+mean(airquality$Temp)
+
+```
+
+Vamos a ver ahora las distribuciones normales, que también reciben el nombre de campana de Gauss:
+
+````{r}
+
+library(ggplot2)
+
+x <- c(rnorm(10000)*10+45)
+
+qplot(x, geom="histogram",
+      main="Distribución normal",
+      binwidth=4,
+      color=I("gray"))
+
+
+```
+
+Vamos a instalar el paquete moments, que nos da distintos tipos de distribuciones:
+
+```{r}
+
+if(!require(moments)){install.packages("moments");require(moments)}
+
+izq.sesgo <- rbeta(100000,100,6)*10
+
+qplot(izq.sesgo, geom="histogram",
+      main="Distribución con sesgo negativo o simetría a la izquierda",
+      binwidth=0.05,
+      xlab=paste("sesgo:",skewness(izq.sesgo)),
+      ylab="")
+
+```
+
+Hay que tener en cuenta cuáles son la media y la mediana de nuestros datos y ver si discrepan mucho (porque hay valores extremos) o no. 
+
+```{r}
+
+median(c(3,7,6,10,3,7))
+
+sueldos <- c(41000,40300,38000,500000,41500,37000,39600,39500)
+
+media <- mean(sueldos)
+
+mediana <- median(sueldos)
+
+mediana
+
+```
+
+Si la mediana es menor a la media, el sesgo es a la derecha. Si ocurre lo contrario, a la izquierda.
+
+Ahora vamos a ver la información básica de los datos con summary, que nos da los indicadores estadísticos principales.
+
+```{r}
+summary(sueldos)
+
+```
+
+```{r}
+
+datos <- c(1,3,5,6,7)
+
+mean(datos)
+
+#para calcular la desviación de la media o desviación típica la fórmula es esta
+
+sum(abs(x-mean(x)))/length(x)
+
+#si lo hiciéramos elevando al cuadrado en lugar de hallar los absolutos mediante (abs(x-mean(x))), los valores más pequeños influirán menos y los extremos todavía pesarán más
+
+
+```
+Ahora vamos a hacer distribución de probabilidades:
+
+```{r}
+
+P(coger un coche de 4 carburadores)
+
+dd <- table(mtcars$carb)/length(mtcars$carb)
+
+table(mtcars$carb)
+
+dd
+
+#para ver la probabilidad con los gráficos básicos de R se hace lo siguiente
+
+barplot(table(mtcars$carb)/length(mtcars$carb))
+
+
+```
+
+Si lo que queremos hacer en lugar de representar la probabilidad es representar la densidad:
+
+```{r}
+
+hist(airquality$Temp, probability = TRUE, main="Función de densidad",xlab="Temperatura")
+
+lines(density(airquality$Temp), col="red")
+
+#ojo, para que funcione este código tiene que ejecutarse el chunk entero
+
+```
+
+```{r}
+
+temp.densidad <- density(airquality$Temp)
+
+#calculamos la Probability density function o pdf
+
+pdf <- approxfun(temp.densidad$x, temp.densidad$y, rule=2)
+
+integrate(pdf,80,90)
+
+```
+
+# Tema 3: Describiendo relaciones
+
+```{r}
+
+head(airquality)
+
+```
+
+## Relaciones entre una variable cualitativa/categórica y una continua
+
+```{r}
+
+if(!require(datos)) {install.packages("datos"); require(datos)}
+
+library(datos)
+
+#para ver las primeras flores del dataset de ejemplo
+
+head(flores)
+
+#voy a ver la media del largo del pétalo de las flores
+
+mean(flores$Largo.Petalo)
+
+
+#podemos filtrar por especies
+
+mean(flores$Largo.Petalo[flores$Especie=="setosa"])
+
+mean(flores$Largo.Petalo[flores$Especie=="versicolor"])
+
+mean(flores$Largo.Petalo[flores$Especie=="virginica"])
+
+
+#si queremos que nos las muestre a la vez
+
+by(flores$Largo.Petalo, flores$Especie, mean)
+
+
+#lo más usual es que queremos que nos muestre estadísticas básicas de todos
+
+by(flores$Largo.Petalo, flores$Especie, summary)
+
+```
+
+Vamos a hacer un diagrama de cajas y bigotes para ver los datos:
+
+```{r}
+
+library("ggplot2")
+
+qplot(Especie, Ancho.Petalo, data=flores, geom="boxplot", fill=Especie)
+
+```
+
+Visualicemos la densidad:
+
+```{r}
+
+library(ggplot2)
+
+qplot(Largo.Petalo, data=flores, geom="density", alpha=I(0.7), fill=Especie)
+
+```
+
+## Relación entre dos variables discretas:
+
+```{r}
+
+ucba <- data.frame(UCBAdmissions)
+
+head(ucba)
+
+UCBAdmissions
+
+#aquí vemos los datos de admitidos y no admitidos por género
+
+cross <- xtabs(Freq ~ Gender + Admit, data=ucba)
+
+cross
+
+
+#con esto veríamos su frecuencia, por ejemplo, si quisiéramos comprobar si hay sesgo de género
+
+prop.table(cross, 1)
+
+
+#con sospechas, vamos a comprobar si es así, añadiendo un filtro de departamentos
+#pones una coma detrás del departamento porque le estás pidiendo filas y columnas
+
+cross2 <- xtabs(Freq ~ Gender + Admit, data=ucba[ucba$Dept=="A",])
+
+cross2
+
+prop.table(cross2,1)
+
+#esto es un ejemplo de la paradoja de Simpson, porque al analizar los datos generales parece haber sesgo de género, pero por departamentos no
+
+#un método interesante para construir tablas de contingencia son los gráficos en mosaico
+
+```
+
+## Gráficos en mosaico
+
+```{r}
+
+if(!require(vcd)){install.packages("vcd");require(vcd)}
+if(!require(vcd)){install.packages("grid");require(grid)}
+
+library(vcd)
+library(grid)
+
+ucba <- data.frame(UCBAdmissions)
+
+
+mosaic(Freq ~ Gender + Admit, data=ucba, shade=TRUE, legend=FALSE)
+
+#se puede ver también departamento a departamento
+
+mosaic(Freq ~ Gender + Admit, data=ucba[ucba$Dept=="A",], shade=TRUE, legend=FALSE)
+
+
+```
+
+El objetivo ideal es desmigar al máximo los datos para evitar cometer errores. Se puede observar también las relaciones de los datos:
+
+```{r}
+
+library(ggplot2)
+
+qplot(height, weight, data=women, geom=c("point"))
+
+```
+
+Si vemos una relación fuerte lo llamamos correlación.
+
+La medida más básica para las correlaciones es la covarianza.
+También podemos examinar el coeficiente de variación de Pearson, que nos habla de la correlación. Pero correlación y causalidad no son lo mismo.
+
+```{r}
+
+#para correlaciones lineales
+
+xs <- 1:100
+
+cor(xs, xs+100)
+
+cor(xs, xs^3)
+
+```
+Para correlaciones no lineales usamos el coeficiente de rango de Spearman, llamado rho de Spearman $\rho$
+
+```{r}
+
+#para correlaciones no lineales
+
+xs <- 1:100
+
+cor(xs, xs+100, method="spearman")
+
+cor(xs, xs^3, method="spearman")
+
+qplot(xs, xs^3, geom=c("point", "smooth"), method="lm", se=FALSE)
+
+```
+
+```{r}
+
+cor(mtautos$peso, mtautos$millas)
+
+qplot(peso, millas, data=mtautos, geom=c("point", "smooth"), method="lm", se=TRUE)
+
+#la parte gris alrededor de la línea de regresión se ve con smooth
+
+```
+
+
+```{r}
+#pearson
+cor(airquality$Temp, airquality$Wind)
+
+#spearman
+cor(airquality$Temp, airquality$Wind, method="spearman")
+
+#nube de puntos y línea de regresión
+qplot(Temp, Wind, data=airquality, geom=c("point", "smooth"), method="lm", se=TRUE)
+
+#la parte gris alrededor de la línea de regresión se ve con smooth
+
+```
+
+```{r}
+
+#podemos ver las correlaciones múltiples de distintas variables
+
+head(iris)
+
+iris.nospecies <- iris[,-5]
+
+cor(iris.nospecies)
+
+```
+
+```{r}
+
+#vamos a visualizar las correlaciones
+
+if(!require(corrgram)) {install.packages("corrgram"); require(corrgram)}
+
+library(corrgram)
+
+corrgram(flores, lower.panel = panel.conf, upper.panel = panel.pts)
+
+```
+
+```{r}
+
+corrgram(flores, lower.panel = panel.pie, upper.panel = panel.pts, diag.panel = panel.density)
+
+#example(corrgram) nos muestra algunos gráficos de ejemplo de este tipo de visualizaciones
+
+```
