@@ -1,0 +1,65 @@
+---
+title: "Untitled"
+author: "Cristina Alonso Pascual"
+date: "2023-06-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+#install.packages("spData")
+#install.packages("sf")
+
+library(spData) #datos geográficos
+library(sf) #gestionar información geográfica
+
+plot(spData::world["continent"], reset=FALSE, main="Continentes")
+
+cex <- sqrt(spData::world$pop)/10000 # creamos un vector con la raíz cuadrada de la población para reducir la diferencia entre el máximo y el mínimo; como son valores muy grandes los divido entre 10.000
+
+world_cent = st_centroid(spData::world) # creamos un listado de los centroides (es decir, estructuras que nos hacen círculos y nos los centran en cada elemento del mapa)
+
+
+#como normalmente lo que tenemos son polígonos, lo transformamos en puntos centrados por cada país, para que nos pinte puntos
+
+#ahora solo nos queda pintarlo
+
+plot(st_geometry(world_cent), add=TRUE, cex=cex) #hay que ejecutarlo junto para añadir la capa
+
+
+```
+
+
+```{r}
+
+#install.packages("cartography")
+#install.packages("dplyr")
+
+library(cartography)
+library(sf)
+library(dplyr)
+
+url <- "https://data.humdata.org/dataset/66f56d39-3f19-4798-a0df-a0ed9a4836ea/resource/eb1c227b-5b57-4008-be86-422f91edef6a/download/uzb_admbnda_adm0_2018b.zip" #metemos la url de descarga del archivo en una url que se llama descargas
+
+#define destination for file
+
+destfile <- "./data/Uzbekistan/"
+
+#download file and save in specific destination
+
+download.file(url, destfile)
+
+#install.packages("readr")
+
+library(readr)
+
+unzip("./data/Uzbekistan/uzb_admbnda_adm0_2018b.zip", list=TRUE) #para ver la lista
+
+unzip("./data/Uzbekistan/uzb_admbnda_adm0_2018b.zip", exdir="./data/Uzbekistan/uzb_admbnda_adm0_2018b", unzip="internal", setTimes=FALSE)
+
+
+```
