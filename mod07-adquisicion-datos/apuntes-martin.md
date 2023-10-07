@@ -104,4 +104,9 @@ Hay distintas herramientas para scrappear, entre las que nos vamos a centrar en 
 # Clase con Martín Nadal
 #### 12/05/2023
 
-Seguimos con el scrappeo [me incorporo a las 19:20]. Nos vamos a ir a python, al archivo de pruebas-scrapper, en el que hoy daremos datos de elecciones.
+Seguimos con el scrappeo. Nos vamos a ir a python, al archivo de pruebas-scrapper, en el que hoy daremos datos de elecciones.
+
+# Repaso con Martín Nadal
+#### 13/07/2023
+
+Aunque el lenguaje SPARQL que usamos con Wikidata hereda de SQL, es bastante diferente. Vamos a trabajar con [estos apuntes](docs.google.com/presentation/d/10TrWhr90AIb6aT89np1QERhA2JNQw2OH0yS1ep0Nho0/edit?usp=sharing) ahora.

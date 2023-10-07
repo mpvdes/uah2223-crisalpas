@@ -1,0 +1,10 @@
+Comprensión de curvas de nivel
+
+Relaciona cada imagen de curvas de nivel de la columna de la izquierda con la figura en alzado de la columna de la derecha correspondiente:
+
+1 -> B
+2 -> E
+3 -> D
+4 -> C
+5 -> F
+6 -> A

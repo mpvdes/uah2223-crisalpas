@@ -1,0 +1,97 @@
+---
+title: "Mapa de coropletas 'libre'"
+author: "Cristina Alonso Pascual"
+date: "2023-07-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Actividad 6.2: Mapa de coropletas libre
+
+***Elabora un mapa de coropletas de una región del país que prefieras, de la temática que quieras, con el paquete de R para cartografía temática que quieras.***
+
+Primero, como en anteriores ocasiones, vamos a activar las librerías que podemos necesitar.
+
+```{r}
+
+library(sf)
+library(ggplot2)
+
+```
+
+Para este tema, vamos a ver los votos que se quedaron sin representación en las elecciones municipales de 2023 en Aragón,  que es la región que visualizaremos, para lo que usaremos los datos del Instituto Geográfico Nacional [(IGN)](https://opendata.esri.es/datasets/ComunidadSIG::municipios-ign/explore?location=35.446512%2C-6.916698%2C5.63) y los datos extraídos de los resultados electorales.
+
+```{r}
+
+munic <- st_read("data/Municipios_IGN/Municipios_IGN.shp", quiet=TRUE) #mapa de líneas con los municipios
+sin.represent <- st_read("data/resultados_municipios - votos_sin_representacion_municipio.csv", quiet=TRUE) #csv con los municipios que tuvieron votos sin representación
+
+munic
+```
+
+Ambos data frames tienen una columna en común: NATCODE y code_ine. Vamos a mergearlos para tener las referencias dentro del shapefile y poder visualizarlas.
+
+```{r}
+
+munic <- merge(munic, sin.represent, by.x="NATCODE", by.y="code_ine")
+
+```
+
+Vamos a calcular el porcentaje de votos sin representacion sobre el total y vamos a añadir una nueva columna llamada ``porcentaje``. 
+
+```{r}
+
+#primero guardamos los datos as.numeric, porque son characters y no se puede hacer operaciones con ellos
+
+munic$VotosSinRepresentacion <- munic$VotosSinRepresentacion %>% as.numeric()
+
+munic$VotosValidos.enblanco.candidaturas. <- munic$VotosValidos.enblanco.candidaturas. %>% as.numeric()
+
+#ahora hacemos la operación para la nueva columna
+
+munic$porcentaje <- munic$VotosSinRepresentacion/munic$VotosValidos.enblanco.candidaturas.*100
+
+```
+
+Ahora, filtramos por los que tienen un CODNUT2 igual a ES24, que equivale a la comunidad de [Aragón](https://es.wikipedia.org/wiki/NUTS_de_Espa%C3%B1a).
+
+```{r}
+
+aragon <- munic %>%
+  filter(CODNUT2 == "ES24")
+
+```
+
+Visualizamos los datos deseados con ggplot.
+
+```{r, fig.width=10}
+
+ggplot(aragon) +
+  geom_sf(aes(fill=aragon$porcentaje), alpha=0.9, color=NA) +
+  scale_fill_gradientn(
+    colors = hcl.colors(15, "SunsetDark", rev=TRUE),
+    n.breaks = 6,
+    labels = scales::label_comma(),
+    guide = guide_legend()
+  ) + #añadimos etiquetas
+  labs(
+    fill = "Porcentaje",
+    title = "Votos sin representación en Aragón",
+    subtitle = "Datos del Ministerio de Interior (2023)"
+  ) + #generamos el fondo y damos un estilo concreto
+  theme_void() +
+  theme(
+      plot.background = element_rect("lightyellow"),
+      text = element_text(face = "bold"),
+      plot.title = element_text(hjust = 1.1),
+      plot.subtitle = element_text(hjust = 0.95)
+  )
+
+```
+
+### ***¿A qué conclusiones lleva el mapa?***
+
+En muchos de los municipios de Aragón no ha habido votos a partidos que finalmente no han obtenido representación, como se puede ver en el mapa por las zonas que no aparecen. Sin embargo, en otros, ha habido votos a partidos que directamente no han logrado ningún concejal. En la mayoría de ellos, parece que el porcentaje de votos sin representación sobre el total de votos válidos se sitúa entre el 0 y el 20%. Sin embargo, hay municipios en los que las papeletas que no obtienen representación son el 40% e incluso el 50% del total.

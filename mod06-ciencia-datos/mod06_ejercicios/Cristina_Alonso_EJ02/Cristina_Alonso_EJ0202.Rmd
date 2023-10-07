@@ -1,0 +1,128 @@
+---
+title: "Tema 2, Ejercicio 2"
+author: "Cristina Alonso Pascual"
+date: "2023-07-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Se ha tomado una fotografía aérea de una cierta escena, dentro de ella se ha seleccionado una parcela de la que se han tomado 28 muestras de los niveles de gris (pixels) correspondientes a otros tantos puntos, obteniéndose los siguientes valores:
+
+410, 395, 432, 405, 423, 445, 385, 425, 403, 463, 456, 442, 401, 435, 402, 428, 450, 452, 467, 394, 410, 390, 396, 430, 428, 479, 465, 402.
+
+Se quiere hacer un estudio de estos datos, agrupándolos en intervalos de amplitud dos.
+
+**a) Obténgase la tabla de frecuencias agrupadas.**
+
+Para ello, primero creamos un vector que contenga los datos.
+
+```{r}
+
+pixels <- c(410, 395, 432, 405, 423, 445, 385, 425, 403, 463, 456, 442, 401, 435, 402, 428, 450, 452, 467, 394, 410, 390, 396, 430, 428, 479, 465, 402)
+
+```
+
+Y, con ellos, generamos una tabla de distribución de frecuencias con la amplitud deseada. Sabemos que $$ a $$ es 2, por lo que usamos la fórmula para calcular la amplitud y conocer $$ k $$, que equivaldrá a los intervalos que tendremos que añadir:
+
+$$ a = \frac{e_k-e_0}{k}$$ Desplazando los valores de la fórmula, nos daría el resultado de:
+
+$$ k = \frac{e_k-e_0}{a}$$ Por lo que, en este caso hallamos el máximo y el mínimo:
+
+```{r}
+
+max(pixels)
+min(pixels)
+
+```
+
+Y la fórmula de la amplitud equivaldría a:
+
+$$ k = \frac{479-385}{2}$$ Lo cual es igual a 47 intervalos, como comprobamos en la fórmula que sigue:
+
+```{r}
+
+(479-385)/2
+
+```
+
+Ahora, vemos la tabla de frecuencias agrupadas en intervalos de amplitud 2 y la guardamos en una nueva variable:
+
+```{r}
+
+#creamos la tabla con los intervalos
+
+frec.agrupadas <- table(cut(pixels,47))
+
+# la transformamos en un dataframe
+
+df.frec.agrupadas <- as.data.frame(frec.agrupadas)
+
+df.frec.agrupadas
+
+```
+
+**b) Obténgase el polígono de frecuencias absolutas y el histograma de frecuencias.**
+
+Con la biblioteca `ggplot2` vamos a visualizar tanto el polígono como el histograma.
+
+
+```{r}
+
+# guardamos el vector pixels como si se tratara de la columna de un dataframe
+
+df.pixels <- as.data.frame(pixels)
+df.pixels
+
+# activamos la biblioteca para la visualización
+
+library(ggplot2)
+
+#visualizamos la columna seleccionada
+
+qplot(pixels, data=df.pixels, geom="histogram",
+      main="Histograma del número de píxeles",
+      binwidth=2, #anadimos la amplitud con binwidth
+      color=I("black"),
+      fill=I("grey"),
+      xlab="Píxeles",
+      ylab="Frecuencia")
+
+```
+Ahora hacemos el polígono de frecuencias:
+
+```{r}
+
+qplot(pixels, data=df.pixels, geom="freqpoly",
+      main="Polígono de frecuencias del número de píxeles",
+      binwidth=2, #anadimos la amplitud con binwidth
+      color=I("black"),
+      xlab="Píxeles",
+      ylab="Frecuencia")
+
+```
+
+**c) Hállese la moda y la mediana.**
+
+Hallamos la mediana.
+
+```{r}
+
+median(pixels)
+
+```
+Este valor muestra que la mitad de las observaciones están por encima de **426,5** y la otra mitad, por debajo.
+
+Ahora hallamos la moda. Para ello, necesitamos la biblioteca `modeest` y usamos la función `mfv`, incluida en la biblioteca, sobre el vector `pixels` o sobre la columna correspondiente en el data frame `df.pixels$pixels`.
+
+```{r}
+
+library(modeest)
+
+mfv(pixels)
+
+```
+
+La moda son tres valores: **402, 410 y 428**.

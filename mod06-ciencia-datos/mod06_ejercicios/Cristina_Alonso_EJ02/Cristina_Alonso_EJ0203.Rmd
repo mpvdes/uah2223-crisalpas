@@ -1,0 +1,98 @@
+---
+title: "Tema 2, Ejercicio 3"
+author: "Cristina Alonso Pascual"
+date: "2023-07-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+En un examen de matemáticas se obtuvieron las siguientes notas sobre 100 puntos: 74, 61, 54, 50, 70, 60, 54, 50, 69, 59, 54, 49, 69, 58, 54 ,47, 69, 58, 53, 40, 64, 57, 52, 39, 64, 56, 52, 34, 63, 55, 51, 30
+
+Calcular lo especificado en cada apartado.
+
+**a) Distribución de frecuencias, tomando 5 intervalos de amplitud 10.**
+
+Primero guardamos los valores en un vector.
+
+```{r}
+
+notas <- c(74, 61, 54, 50, 70, 60, 54, 50, 69, 59, 54, 49, 69, 58, 54 ,47, 69, 58, 53, 40, 64, 57, 52, 39, 64, 56, 52, 34, 63, 55, 51, 30)
+
+notas
+
+```
+
+Con el vector, generamos la distribución de frecuencias de las notas, en los intervalos solicitados y con la amplitud requerida.
+
+Para ello, tenemos que encontrar los puntos en los que queremos que el intervalo corte los valores. Podemos deducirlos a través de la distribución de frecuencias de amplitud 5.
+
+```{r}
+
+table(cut(notas, 5))
+
+# vamos a crear un vector que incluya los valores deseados que queremos tener en el intervalo
+
+table(cut(notas, breaks=c(30,40,50,60,70,80)))
+
+```
+
+**b) Histograma y polígono de frecuencias.**
+
+Primero, creamos el data frame correspondiente con el vector `notas`.
+
+```{r}
+
+df.notas <- as.data.frame(notas)
+df.notas
+
+```
+
+Y comenzamos a trabajar con la biblioteca `ggplot2`, con la que visualizaremos tanto el histograma como el polígono de frecuencias absolutas.
+
+```{r}
+
+# activamos la biblioteca para la visualización
+
+library(ggplot2)
+
+#visualizamos la columna seleccionada
+
+qplot(notas, data=df.notas, geom="histogram",
+      main="Histograma de las notas de matemáticas",
+      binwidth=5, #anadimos la amplitud con binwidth
+      color=I("black"),
+      fill=I("grey"),
+      xlab="Notas",
+      ylab="Frecuencia")
+
+qplot(notas, data=df.notas, geom="freqpoly",
+      main="Polígono de frecuencias de las notas de matemáticas",
+      binwidth=5, #anadimos la amplitud con binwidth
+      color=I("grey"),
+      xlab="Notas",
+      ylab="Frecuencia")
+
+```
+
+**c) Mediana, media y varianza de la distribución de notas.**
+
+Usamos las funciones oportunas para calcular los datos solicitados.
+
+```{r}
+
+mean(notas)
+
+median(notas)
+
+var(notas)
+
+```
+
+Por lo tanto, los resultados son:
+
+-   **Media** = 55,28125
+-   **Mediana** = 54,5
+-   **Varianza** = 10,21774

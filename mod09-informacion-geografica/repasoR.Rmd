@@ -33,6 +33,9 @@ plot(st_geometry(world_cent), add=TRUE, cex=cex) #hay que ejecutarlo junto para 
 
 ```
 
+```{r}
+
+```
 
 ```{r}
 

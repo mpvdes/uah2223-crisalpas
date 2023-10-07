@@ -1,3 +1,13 @@
+# Estadística básica con Alejandro Zappala
+### 28 y 29 de marzo de 2023
+
+#### Conceptos básicos
+Es importante distinguir las variables que vamos a usar y, por lo tanto, controlar los conceptos.
+Si dividimos una muestra en intervalos, su **marca de clase** será la media entre los dos valores del intervalo. Estas marcas tienen como ventaja que se pueden utilizar en lugar del intervalo completo y nos dan los mismos resultados que si hiciéramos la media de cada número.
+
+El contenido aparece completo en [los apuntes](https://alayzappala.gitlab.io/apuntes-ciencia-datos/), pero, si añadimos información, aparecerá en el documento pruebas-r.Rmd.
+
+
 # Introducción al análisis de redes con Alejandro Zappala
 ### 16 de mayo de 2023
 
@@ -39,4 +49,4 @@ A partir de las conclusiones obtenidas en todo el proceso, se pueden tomar decis
 
 ## Práctica con RStudio
 
-Usamos el documento analisis-redes.Rmd.
+Usamos el documento analisis-redes.Rmd. 

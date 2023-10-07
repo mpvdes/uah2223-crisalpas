@@ -1,0 +1,78 @@
+---
+title: "Mapa de una región de España"
+author: "Cristina Alonso Pascual"
+date: "2023-07-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Actividad 6.1: Mapa de una región de España
+
+***Elabora un mapa de coropletas con la densidad de población de la Comunidad Autónoma que quieras empleando el paquete mapsf***
+
+Primero vamos a activar las librerías que necesitamos.
+
+```{r}
+
+if(!require(mapSpain)) {install.packages("mapSpain", dependencies=TRUE); require(mapSpain)}
+
+library(mapSpain)
+library(sf)
+library(cartography)
+library(dplyr)
+library(ggplot2)
+library(units)
+
+```
+
+Ahora, vamos a crear una variable con los municipios de Castilla y León, que es la región de la que visualizaremos la densidad, con los datos del paquete `mapSpain` y les vamos a añadir las tablas correspondientes de población. Los criterios para unirlas van a ser el código de provincia y municipio, como hablamos en clase.
+
+```{r}
+
+cyl <- esp_get_munic(region = "Castilla y León") %>%
+  left_join(mapSpain::pobmun19, by = c("cpro", "cmun"))
+
+# ahora calculamos la superficie y, con ella, la densidad de población
+
+cyl$superficie <- cyl %>% st_area() %>% set_units(km^2)
+
+cyl$densidad <- cyl$pob19/cyl$superficie %>% as.numeric #lo guardamos as numeric para evitar que nos dé error el gráfico posteriormente
+
+cyl # previsualizamos el resultado
+
+```
+
+Ahora vamos a visualizar lo que queremos, es decir, la densidad de población por municipio. Vamos a hacerlo a través de la visualización de la población, que son los datos de los que disponemos en este paquete.
+
+```{r, fig.width=5}
+
+# usamos la librería ggplot2
+ggplot(cyl) +
+  geom_sf(aes(fill=cyl$densidad), alpha=0.9, color=NA) +
+  scale_fill_gradientn(
+    colors = hcl.colors(30, "Blue-Red"),
+    n.breaks = 10,
+    labels = scales::label_comma(),
+    guide = guide_legend()
+  ) + #añadimos etiquetas
+  labs(
+    fill = "Densidad",
+    title = "Población en Castilla y León",
+    subtitle = "Datos del INE (2019)"
+  ) + #generamos el fondo y damos un estilo concreto
+  theme_void() +
+  theme(
+      plot.background = element_rect("#B6D0E2"),
+      text = element_text(face = "bold"),
+      plot.title = element_text(hjust = 0.5),
+      plot.subtitle = element_text(hjust = 0.5)
+  )
+
+```
+
+### ***¿A qué conclusiones lleva el mapa?***
+
+El resultado final de la población y su distribución en el espacio en la visualización dan a entender que en Castilla y León la mayoría de la población se concentra en puntos concretos (que, de hecho, corresponden a las capitales de provincia, en especial, a Valladolid, ciudad que también acoge las sedes autonómicas), mientras que el resto del territorio se encuentra muy por debajo de los 50.000 habitantes, umbral más bajo establecido en nuestra leyenda de color. Aun así, incluso en algunas capitales de provincia la población está mucho más concentrada que en otras, siendo León y Salamanca donde se percibe una mayor concentración de la población por kilómetro cuadrado.

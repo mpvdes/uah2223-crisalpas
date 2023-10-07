@@ -1,0 +1,89 @@
+---
+title: "Mapas de símbolos proporcionales"
+author: "Cristina Alonso Pascual"
+date: "2023-07-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Actividad 4: Mapas de símbolos proporcionales
+
+***Elabora un mapa de símbolos proporcionales de la temática que quieras del país que prefieras.***
+
+Aunque mi idea inicial era realizar una visualización de datos más allá de lo que hicimos en clase, me he decantado por entender bien cuáles son los procesos para la realización de un mapa de este tipo. Por lo tanto, voy a visualizar un mapa de España en el que las ciudades aparezcan por tamaño de población, al igual que hicimos en clase.
+
+Para ello, hay que descargar el archivo shapefile de España [en la página del Centro Nacional de Información Geográfica](https://centrodedescargas.cnig.es/CentroDescargas/catalogo.do?Serie=CAANE) y el de los lugares en la [página de descargas proporcionada](https://mapcruzin.com/free-spain-arcgis-maps-shapefiles.htm) e instalar las bibliotecas que vamos a necesitar para ello.
+
+```{r}
+
+if(!require(mapsf)) {install.packages("mapsf"); require(mapsf)}
+if(!require(SpatialPosition)) {install.packages("SpatialPosition"); require(SpatialPosition)}
+if(!require(cartography)) {install.packages("cartography"); require(cartography)}
+
+library(spData)
+library(sf)
+library(SpatialPosition)
+library(mapsf)
+library(cartography)
+library(dplyr)
+
+``` 
+
+Una vez instaladas las bibliotecas que usamos para la visualización de mapas, guardamos los shapefiles en dos data frames distintos: uno con el nombre del país ``esp`` (aunque exista un paquete que ya tenga las coordenadas del país, vamos a hacerlo como si este no existiera) y otro con el de ``places``, que contendrá las variables que visualizaremos.
+
+```{r}
+
+esp <- st_read("data/lineas_limite/SHP_ETRS89/ll_autonomicas_inspire_peninbal_etrs89/ll_autonomicas_inspire_peninbal_etrs89.shp", quiet=TRUE)
+places <- st_read("data/spain-places/places.shp", quiet=TRUE)
+
+```
+
+En concreto, nos interesa visualizar la columna ``population`` del data frame ``places``. Para ello, de la misma forma que hicimos en clase, filtramos el data frame y seleccionamos solo los valores en los que el tipo sea city y cuya población sea mayor que 0 (como podemos ver al previsualizar el data frame, algunas filas no tienen ningún valor asignado de población).
+
+```{r}
+
+places # previsualizamos los datos que tenemos 
+
+```
+```{r}
+
+# hacemos el filtro mencionado
+cities <- places %>%
+  filter(type == "city" & population > 0)
+
+cities # previsualizamos el resultado
+
+# creamos también un filtro que luego nos servirá para las etiquetas
+head.cities <- cities %>%
+  filter(population > 350000)
+
+```
+
+Una vez tenemos el filtro, ya podemos hacer la visualización en el mapa. Primero, establecemos la base, es decir, el mapa de España. A ella, posteriormente, añadimos el valor de las ciudades que nos interesa visualizar.
+
+```{r, fig.width=6}
+
+plot(st_geometry(esp),main="Ciudades de España por población", col="white", lwd=0.2, axes=TRUE, bg="#cccccc")
+
+plot(st_geometry(cities), add = TRUE)
+
+propSymbolsLayer(x=cities, var="population",
+                 legend.title.txt="Población", inches=0.16,
+                 col="#68C5DB", border="white")
+
+labelLayer(x=head.cities, txt="name", col="black",font,
+           halo=FALSE, bg="white", r=0.03,
+           overlap=FALSE, show.lines=TRUE)
+
+barscale(pos="bottomright", style="pretty", unit="km")
+
+north()
+
+```
+
+***¿A qué conclusiones lleva el mapa?***
+
+Este mapa lleva a concluir algo que al ser residentes ya conocemos, pero que se ve claramente en la visualización: las mayores ciudades se sitúan en la costa o cerca de la misma, salvo Madrid y Zaragoza. Esto no solo ocurre con las grandes ciudades, sino que las que son ciudades en general se ubican en estas zonas del país, con Castilla y León, Castilla-La Mancha y Extremadura con apenas ubicaciones de este tipo, pese a su gran superficie.

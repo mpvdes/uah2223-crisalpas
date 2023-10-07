@@ -1,0 +1,106 @@
+---
+title: "Tema 2, Ejercicio 4"
+author: "Cristina Alonso Pascual"
+date: "2023-07-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Se ha medido la altura de 90 personas, obteniéndose la siguiente tabla:
+
+| Altura       | Nº jóvenes |
+|--------------|------------|
+| 1.55 -- 1.65 | 14         |
+| 1.65 -- 1.75 | 27         |
+| 1.75 -- 1.85 | 20         |
+| 1.85 -- 1.95 | 16         |
+| 1.95 -- 2.05 | 13         |
+
+Halla lo solicitado en los siguientes apartados.
+
+**a) El histograma y polígono de frecuencias absolutas.**
+
+Primero tenemos que crear el vector correspondiente, en el que aparezca reflejada la frecuencia de cada valor.
+
+```{r}
+
+# creamos la tabla como un data frame
+table <- data.frame(value=c("1.55 - 1.65", "1.65 - 1.75", "1.75 - 1.85", "1.85 - 1.95", "1.95 - 2.05"), freq=c(14, 27, 20, 16, 13))
+table
+
+# lo transformamos en un vector con rep
+
+altura <- rep(table$value, table$freq)
+altura
+
+```
+
+Ahora, representamos este vector en un histograma y en un polígono de frecuencias, aunque como es una variable discreta y cualitativa por venir proporcionado el intervalo sin datos segregados tendremos que usar algo distinto a la biblioteca `ggplot2`.
+
+En concreto, usaremos la función `barplot` para el histograma.
+
+```{r}
+
+barplot(table(altura), main = "Histograma de frecuencias de la altura", xlab = "Altura", ylab = "Frecuencia")
+
+```
+
+Y la función `ggplot` para el polígono de frecuencias.
+
+```{r}
+
+library(ggplot2)
+
+ggplot(table, aes(x=factor(value), y=freq, group=1)) +
+  geom_line() +
+  ggtitle("Polígono de frecuencias de la altura") +
+  labs(x= "Altura", y= "Frecuencia")
+
+```
+
+**b) La media aritmética, media geométrica, moda y mediana.**
+
+Para ello, tenemos que sustituir los valores de la tabla por su marca de clase. Creamos una nueva tabla con los valores de la altura con marcas de clase en lugar de con intervalos.
+
+```{r}
+
+# creamos la tabla como un data frame
+marcas.table <- data.frame(value=c(1.6, 1.7, 1.8, 1.9, 2), freq=c(14, 27, 20, 16, 13))
+marcas.table
+
+# lo transformamos en un vector con rep
+
+marcas.altura <- rep(marcas.table$value, marcas.table$freq)
+marcas.altura
+
+```
+
+Usando el vector generado con las marcas de clase podemos utilizar las funciones correspondientes y calcular lo solicitado.
+
+```{r}
+
+mean(marcas.altura)
+
+median(marcas.altura)
+
+# para la moda llamamos a la biblioteca modeest
+
+library(modeest)
+
+mfv(marcas.altura)
+
+# para la media geométrica usamos la fórmula correspondiente
+
+exp(mean(log(marcas.altura)))
+
+```
+
+Los resultados son:
+
+-   **Media aritmética**: 1,785556
+-   **Media geométrica**: 1,780952
+-   **Mediana**: 1,8
+-   **Moda**: 1,7

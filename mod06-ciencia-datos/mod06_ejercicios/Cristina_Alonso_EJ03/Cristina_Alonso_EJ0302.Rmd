@@ -1,0 +1,83 @@
+---
+title: "Tema 3, Ejercicio 2"
+author: "Cristina Alonso Pascual"
+date: "2023-07-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ejercicio 3.2
+
+El archivo 2012-2016-presidential-elections.zip, obtenido de [aqui](https://www.kaggle.com/datasets/joelwilson/2012-2016-presidential-elections) contiene los resultados electorales para las elecciones de 2012 y 2016 de las elecciones presidenciales en estados unidos, además de datos demográficos para cada estado (county facts).
+
+Ambas tablas han sido unidas en la tabla votes.csv, lo que hace que podamos analizar si hay alguna relación entre los datos demográficos y el resultado electoral.
+
+Utilizando el documento `votes.csv`, dentro del archivo zip, se pide:
+
+**a) Correlación entre votantes de Trump y grupo de mayores de 65 años**
+
+Primero, vamos a leer el csv correspondiente, que incluimos en la carpeta donde se encuentra el archivo .Rmd para que pueda acceder a él.
+
+```{r}
+
+elecciones <- read.csv("votes.csv")
+
+elecciones
+
+```
+
+Ahora, tenemos que encontrar las dos columnas que nos interesan para hacer la correlación (en este caso, usamos las columnas de las proporciones de voto a Trump sobre el total ``Trump`` y del peso de la población de más de 65 años sobre el total ``age65plus``) y darle la instrucción oportuna a R.
+
+```{r}
+
+cor(elecciones$Trump, elecciones$age65plus)
+
+```
+
+Existe una **correlación de 0,32**, positiva, pero no parece muy intensa en particular.
+
+
+**b) Generar la nube de puntos de puntos y línea de regresión para la relación entre condados votantes de Trump y proporción de mayores de 65 años:**
+
+Para generar una nube de puntos con su correspondiente línea de regresión, primero cargamos la biblioteca ``ggplot2`` y luego hacemmos la correspondiente visualización.
+
+```{r}
+
+library(ggplot2) #cargamos la biblioteca
+
+qplot(Trump, age65plus, data=elecciones, geom=c("point", "smooth"), method="lm", se=TRUE)
+
+```
+
+
+**c. Diagrama de covarianzas de los valores demográficos más relevantes utilizando el paquete corrgram teniendo en cuenta que hemos de eliminar las columnas que no nos interesan (nombres propios de estados, predicciones..).**
+
+Para visualizar las covarianzas de los valores demográficos más relevantes, primero instalamos ``corrgram`` y activamos la biblioteca.
+
+```{r}
+
+if(!require(corrgram)) {install.packages("corrgram"); require(corrgram)}
+
+library(corrgram)
+
+```
+
+Ahora, vamos a seleccionar los valores que vamos a querer visualizar. En concreto, escogeremos ``population2014``, ```population2010``, ``age65plus``, ``Edu_batchelors``, ``Income`` y``Poverty``, y añadimos también el voto a Trump, para ver qué tipos de población han votado al republicano.
+
+```{r}
+
+valores.covs <- subset(elecciones, select = c(population2014, population2010, age65plus, Edu_batchelors, Income, Poverty, Trump))
+
+```
+
+Visualizamos.
+
+```{r}
+
+corrgram(valores.covs, lower.panel = panel.cor, upper.panel = panel.pts)
+
+```
+

@@ -1,0 +1,105 @@
+---
+title: "Tema 3, Ejercicio 1"
+author: "Cristina Alonso Pascual"
+date: "2023-07-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ejercicio 3.1
+
+Las calificaciones obtenidas por 30 alumnos en los exámenes cuatrimestral (x) y final (y) de Matemáticas fueron las siguientes:
+ 
+**x**: 0, 0, 1, 2, 1, 3, 4, 2, 5, 6, 1, 3, 5, 0, 6, 4, 6, 4, 3, 2, 7, 2, 8, 4, 6, 6, 7, 9, 4, 6
+**y**: 2, 0, 0, 5, 3, 6, 8, 3, 7, 9, 1, 6, 9, 1, 9, 8, 10, 7, 5, 4, 10, 4, 9, 4, 8, 5, 8, 10, 6, 10
+
+Se pide:
+
+**a) Formar una tabla de doble entrada sin agrupar los datos en intervalos.**
+
+Creamos dos variables para x y para y:
+
+```{r}
+
+n.cuatrim  <- c(0, 0, 1, 2, 1, 3, 4, 2, 5, 6, 1, 3, 5, 0, 6, 4, 6, 4, 3, 2, 7, 2, 8, 4, 6, 6, 7, 9, 4, 6)
+
+n.final <- c(2, 0, 0, 5, 3, 6, 8, 3, 7, 9, 1, 6, 9, 1, 9, 8, 10, 7, 5, 4, 10, 4, 9, 4, 8, 5, 8, 10, 6, 10)
+
+```
+
+Ahora, con la función ``table`` creamos una tabla de doble entrada usando ambos vectores y usamos la función ``addmargins`` también para que nos sume los valores totales por filas y columnas.
+
+```{r}
+
+addmargins(table(n.cuatrim, n.final))
+
+```
+
+**b) Hallar las distribuciones marginales. Media y varianza de las mismas.**
+
+Hallar la distribución marginal implica hacer una tabla con los valores de cada vector por su lado, sin tener en cuenta el cruce de ambos.
+
+De esta forma, realizamos el mismo procedimiento que antes, pero para ambas variables.
+
+```{r}
+
+# distribución marginal de las notas del examen cuatrimestral
+addmargins(table(n.cuatrim))
+
+# distribución marginal de las notas del examen final
+addmargins(table(n.final))
+```
+
+Ahora, como hemos hecho previamente, sin tener en cuenta el cruce de ambas variables, hallamos la media y la varianza de ambos vectores por separado.
+
+```{r}
+
+# media
+mean(n.cuatrim)
+mean(n.final)
+
+#varianza
+var(n.cuatrim)
+var(n.final)
+
+
+```
+
+Así, concluimos que la **media** de las notas cuatrimestrales fue de 3,9, frente al 5,9 de media de las notas finales. En cuanto a la **varianza**, es de aproximadamente 6,16 y de 9,96, respectivamente.
+
+
+**c) Determinar la covarianza.**
+
+Para los datos que tenemos, creamos un vector identificativo, que numere a los alumnos del 1 al 30, y generamos el data frame con las columnas correspondientes.
+
+```{r}
+
+# creamos vector con identificador único
+id <- c(1:30)
+id
+
+# creamos data frame con las columnas deseadas
+notas <- data.frame(id, n.cuatrim, n.final)
+notas
+
+```
+
+Una vez creado el dataset, ntroducimos la función de la covarianza (si bien esta también se puede hallar uniendo los dos vectores)
+
+```{r}
+
+#covarianza usando el dataset
+cov(notas$n.cuatrim, notas$n.final)
+
+#covarianza usando los vectores
+cov(n.cuatrim,n.final)
+```
+
+La covarianza es **6,989655**, aunque este resultado por sí mismo es muy difícil de interpretar, como hemos comentado en clase. Su fórmula es:
+
+$$ cov_xy = \frac{\sum(x-\bar{x})(y-\bar{y})}{(n-1)}$$
+
+No obstante, si la covarianza es positiva -como es el caso-, podemos concluir que la relación entre las variables es también positiva.

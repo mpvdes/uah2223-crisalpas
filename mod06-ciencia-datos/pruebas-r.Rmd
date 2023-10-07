@@ -1,7 +1,7 @@
 ---
 title: "pruebas-r"
 author: "Cristina Alonso Pascual"
-date: "2023-04-18"
+date: from "2023-04-18" to "2023-07-05"
 output: html_document
 ---
 
@@ -9,7 +9,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Creamos una función que nos diga si el número que tenemos es par o no:
+# Tema 1 Rudimentos de R
+
+Para comenzar a trabajar podemos usar los operadores habituales, como la suma, la resta...
+Pero también podemos generar funciones.
+En concreto, vamos a crear una función que nos diga si el número que tenemos es par o no:
 
 ```{r}
 es.par <- function(un.numero){
@@ -20,7 +24,7 @@ es.par <- function(un.numero){
 }
 ```
 
-Introducimos datos en la función:
+Introducimos datos en la función para probarla:
 
 ```{r}
 es.par(2)

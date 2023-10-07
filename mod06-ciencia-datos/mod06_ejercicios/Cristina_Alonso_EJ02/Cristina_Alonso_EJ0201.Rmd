@@ -1,0 +1,51 @@
+---
+title: "Tema 2,Ejercicio 1"
+author: "Cristina Alonso Pascual"
+date: "2023-07-06"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+La desviación típica se calcula mediante
+$$ (|x_1-\bar{x}|+|x_2-\bar{x}|+···+|x_n-\bar{x}|)/n $$, donde
+$$ \bar{x} $$ es la media del vector de datos y $$ |x_1-\bar{x}| $$ el
+valor absoluto (el valor en positivo) de la diferencia de la primera
+observación con la media. Calcule esto para el conjunto de datos
+`rivers` usando la función *suma* para sumar los valores y *abs* para
+encontrar el valor absoluto.
+
+Para ello, existen bases de datos de ejemplo dentro de R, como es la de
+rivers. A la que tenemos que acceder y de la que podemos ver su
+descripción con el siguiente código
+
+```{r}
+# vemos los paquetes que tenemos y accedemos al de rivers para ver sus características
+
+help(package="datasets")
+
+#podemos acceder directamente
+?rivers
+
+```
+
+Una vez observamos las características correspondientes para saber cómo
+trabajar con los datos, vamos a calcular la desviación típica del
+conjunto, aplicando la fórmula requerida.
+
+```{r}
+
+# vamos a desarrollar la fórmula
+
+
+sum((abs(rivers-mean(rivers))))/length(rivers)
+
+
+```
+
+El resultado final es de **313,5508**.
